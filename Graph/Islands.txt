@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void DFS(int **arr, int *visited, int n, int sv) {
+
+  visited[sv] = 1;
+
+  for (int i = 0; i < n; ++i) {
+    if (i == sv) {
+      continue;
+    }
+    if (arr[sv][i] == 1 && visited[i] == 0) {
+      DFS(arr, visited, n, i);
+    }
+  }
+
+  return;
+}
+
+int solve(int n, int m, vector<int> u, vector<int> v) {
+  int **arr = new int *[n];
+  for (int i = 0; i < n; ++i) {
+    arr[i] = new int[n];
+    for (int j = 0; j < n; ++j) {
+      arr[i][j] = 0;
+    }
+  }
+
+  for (int i = 0; i < m; ++i) {
+    arr[u[i] - 1][v[i] - 1] = 1;
+    arr[v[i] - 1][u[i] - 1] = 1;
+  }
+
+  // for (int i = 0; i < n; ++i)
+  // {
+  // 	for (int j = 0; j < n; ++j)
+  // 	{
+  // 		cout<<i<<" "<<j<<" "<<arr[i][j]<<endl;
+  // 	}
+  // }
+  // cout << '\n';
+
+  int *visited = new int[n];
+
+  for (int i = 0; i < n; ++i) {
+    visited[i] = 0;
+  }
+
+  int count = 0;
+  for (int i = 0; i < n; ++i) {
+    if (visited[i] == 0) {
+      count++;
+      DFS(arr, visited, n, i);
+    }
+  }
+
+  return count;
+}
+
+int main() {
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+   int t;
+   cin>>t;
+  int n, m;
+  vector<int> u, v;
+  while(t--){ 
+  cin >> n >> m;
+  for (int i = 0; i < m; i++) {
+    int y;
+    cin >> y;
+    u.push_back(x);
+  }
+  for (int i = 0; i < m; i++) {
+    int x;
+    cin >> x;
+    v.push_back(x);
+  }
+  cout << solve(n, m, u, v) << endl;
+  }
+}
