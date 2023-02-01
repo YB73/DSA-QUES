@@ -5,8 +5,7 @@ public:
         if(str1 + str2 != str2 + str1){
             return "";
         }
-        int gcdlen = gcd(str1.size(), str2.size());
-        return str1.substr(0, gcdlen);
+        return str1.substr(0, gcd(size(str1), size(str2)));
         
     }
 };
