@@ -10,35 +10,33 @@ class Solution
     //from the source vertex S.
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
-      priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-
-        // Initialising distTo list with a large number to
-        // indicate the nodes are unvisited initially.
-        // This list contains distance from source to the nodes.
-        vector<int> dist(V, INT_MAX);
-
-        // Source initialised with dist=0.
-        dist[S] = 0;
-        pq.push({0, S});
-          
-          
-          while(!pq.empty()){
-              int dis = pq.top().first;
-              int node = pq.top().second;
-              
-              pq.pop();
-              
-              for(auto it : adj[node]){
-                  int disN = it[1];
-                  int adjN = it[0];
+      set<pair<int, int>> st;
+      vector<int> dist(V, 1e9);
+      
+      st.insert({0,S});
+      dist[S]  = 0;
+      while(!st.empty()){
+          auto it = *(st.begin());
+          int node = it.second;
+          int dis = it.first;
+          st.erase(it);
+          for(auto it : adj[node]){
+              int adjN = it[0];
+              int dista = it[1];
+              if(dis + dista < dist[adjN]){
+                  if(dist[adjN] != 1e9)
+                      st.erase({dist[adjN], adjN});
                   
-                  if(dis + disN < dist[adjN]){
-                      dist[adjN] = dis + disN;
-                      pq.push({dist[adjN], adjN});
-                  }
+                      
+                      dist[adjN] = dista + dis;
+                      st.insert({dist[adjN], adjN});
+                  
               }
           }
-          return dist;
+          
+      }
+      return dist;
+    
     }
 };
 
