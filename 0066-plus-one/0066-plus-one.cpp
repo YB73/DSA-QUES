@@ -12,6 +12,7 @@ public:
                 return digits;
             }
         }
+        // if suppose the number is 999, then after the above loop the digits array will be = [000]
         digits.push_back(0);
         digits[0] = 1;
         return digits;
