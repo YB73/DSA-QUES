@@ -1,25 +1,29 @@
 class Solution {
 public:
     double binaryExp(double x, long long n) {
-        // Base case, to stop recursive calls.
         if (n == 0) {
             return 1;
         }
        
         // Handle case where, n < 0.
         if (n < 0) {
-            return 1.0 / binaryExp(x, -1 * n);
+            n = -1 * n;
+            x = 1.0 / x;
         }
        
         // Perform Binary Exponentiation.
-        // If 'n' is odd we perform Binary Exponentiation on 'n - 1' and multiply result with 'x'.
-        if (n % 2 == 1) {
-            return x * binaryExp(x * x, (n - 1) / 2);
+        double result = 1;
+        while (n) {
+            // If 'n' is odd we multiply result with 'x' and reduce 'n' by '1'.
+            if (n % 2 == 1) {
+                result = result * x;
+                n -= 1;
+            }
+            // We square 'x' and reduce 'n' by half, x^n => (x^2)^(n/2).
+            x = x * x;
+            n = n / 2;
         }
-        // Otherwise we calculate result by performing Binary Exponentiation on 'n'.
-        else {
-            return binaryExp(x * x, n / 2);
-        }
+        return result;
     }
 
     double myPow(double x, int n) {
