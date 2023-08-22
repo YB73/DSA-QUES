@@ -3,7 +3,7 @@ public:
     string convertToTitle(int columnNumber) {
         string result = "";
 
-        while (columnNumber > 0) {
+        while (columnNumber) {
             // Convert the column number to 0-based index
             columnNumber--;
 
