@@ -1,42 +1,23 @@
 class Solution {
 public:
     int minOperations(vector<int>& nums, int x) {
-         int n = nums.size();
-        if(n == 1 && nums[0] != x) return -1;
-        vector<int> prefix;
-        prefix.push_back(0);
-
-        int sum = 0;
-        for(int i =0;i < n ;i++){
-            sum += nums[i];
-            prefix.push_back(sum);
-        }
+       int sum = 0, n = nums.size();
+        for(int i=0;i<n;i++)sum=sum+nums[i];
+        int new_sum = sum - x;
+        if(*min_element(nums.begin(),nums.end()) > x)return -1;
         if(sum < x) return -1;
-        if(sum == x) return n;
-        unordered_map<int,int> suff;
-
-        for(int i = 0;i < n; i++){
-            suff[sum] = i;
-            sum -= nums[i];
-
-        }
-        suff[0] = n;
-
-        // Main Logic
-
-        int noOfOps = INT_MAX;
-
-        int i = 0;
-        while(prefix[i] <= x){
-            int target = x - prefix[i];
-
-            if(suff[target]){
-                noOfOps = min(noOfOps, i + n - suff[target]);
+        // int l=0,r=0;
+        int l = 0;
+        int curr_sum = 0,max_len = INT_MIN;
+        for(int r=0;r<n;r++){
+            curr_sum = curr_sum + nums[r];
+            while(l<=r && curr_sum > new_sum){
+                    curr_sum = curr_sum - nums[l];
+                    l++;
+                }
+            if(curr_sum == new_sum) max_len = max(max_len,r-l+1);
             }
-            i++;
-        }
-        if(noOfOps == INT_MAX) return -1;
-        return noOfOps;
+            return n - max_len;
         
     }
 };
