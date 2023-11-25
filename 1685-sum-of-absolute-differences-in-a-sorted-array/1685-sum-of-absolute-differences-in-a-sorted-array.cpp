@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> getSumAbsoluteDifferences(vector<int>& nums) {
-    // using the hints give
+    // using the hints given
           int total_sum=0;
         int n=nums.size();
         for(int i=0; i<n; i++)total_sum+=nums[i];
